@@ -2,6 +2,7 @@
 [UID=bf36d6f1-af53-41b9-b7ae-0f0cb16d8734][PATH=../data/models/translate.pgf][METAPATH=../data/models/translate.pgf.meta][TIME=1534507661][METATIME=1534507661]
 [UID=4429d63a-9867-468f-a03f-cf56fee3c82e][PATH=../data/shaders/debug/triangle-frag.spv][METAPATH=../data/shaders/debug/triangle-frag.spv.meta][TIME=1534793287][METATIME=1534624029]
 [UID=f889c133-1ec0-44ea-9209-251cd236f887][PATH=../data/shaders/debug/triangle-vert.spv][METAPATH=../data/shaders/debug/triangle-vert.spv.meta][TIME=1534881373][METATIME=1534881373]
+[UID=3982b466-58fe-4918-8735-fc6cc45378b0][PATH=../data/shaders/debug/triangle-instanced-vert.spv][METAPATH=../data/shaders/debug/triangle-instanced-vert.spv.meta][TIME=1534881373][METATIME=1534881373]
 [UID=17a36df2-fa58-4233-b38d-822cee7a85d5][PATH=../data/shaders/surface/default-frag.spv][METAPATH=../data/shaders/surface/default-frag.spv.meta][TIME=1531817515][METATIME=1534609296]
 [UID=17a36df2-fa58-4233-b38d-823cee7a85d5][PATH=../data/shaders/surface/default-vert.spv][METAPATH=../data/shaders/surface/default-vert.spv.meta][TIME=1531817499][METATIME=1534609256]
 [UID=d04e22b8-6843-4439-99da-c9af8a527368][PATH=../data/textures/cerberus/cerberus_ABDO.dds][METAPATH=../data/textures/cerberus/cerberus_ABDO.dds.meta][TIME=1516461820][METATIME=1534885052]

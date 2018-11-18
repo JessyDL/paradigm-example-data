@@ -1,11 +1,10 @@
 
 attribute VSIn
 {
-	location 0 vec3 Pos 		( buffer: GEOMETRY_VERTEX_POSITION rate: vertex   attribute: {106,0} );
-	location 1 vec3 Normal 		( buffer: GEOMETRY_VERTEX_NORMAL   rate: vertex   attribute: {106,0} );
-	location 2 vec2 Tex 		( buffer: GEOMETRY_VERTEX_TEX      rate: vertex   attribute: {103,0} );
-	location 3 vec3 Tangent 	( buffer: GEOMETRY_VERTEX_TANGENT  rate: vertex   attribute: {106,0} );
-	location 4 mat4x4 modelMat 	( buffer: INSTANCE_POSITION        rate: instance attribute: {109,0}, {109,16}, {109,32}, {109,48} );
+	location 0 vec3 position 		( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   attribute: {106,0} );
+	location 1 vec3 color 			( buffer: GEOMETRY_VERTEX_COLOR   	rate: vertex   attribute: {106,0} );
+	location 2 vec2 tex 			( buffer: GEOMETRY_VERTEX_TEX      	rate: vertex   attribute: {103,0} );
+	location 3 mat4x4 modelMat 	( buffer: INSTANCE_TRANSFORM        rate: instance attribute: {109,0}, {109,16}, {109,32}, {109,48} );
 };
 
 attribute VSIn_PT
