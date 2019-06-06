@@ -6,8 +6,8 @@
 #include "../inc/descriptors.inc"
 #include "../inc/math.inc"
 
-#using in 			: VSIn			in
-#using out 			: VSOut_Color 	out
+#using in 					: VSIn					in
+#using out 					: VSOut_Color 	out
 #using descriptors 	: VSBinding
 
 out gl_PerVertex 

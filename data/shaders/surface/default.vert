@@ -6,7 +6,7 @@
 #include "../inc/math.inc"
 #include "../inc/descriptors.inc"
 
-#using in 			: VSIn 		in
+#using in 			: VSIn_full 		in
 #using out 			: VSOut 	out
 #using descriptors 	: VSBinding
 
@@ -24,12 +24,12 @@ out gl_PerVertex
 void main() 
 {
 	out.Color = vec4(0);
-	out.Tex = in.Tex;
+	out.Tex = in.tex;
 	out.InstanceIndex = gl_InstanceIndex;
 	mat4 mNormal = ubo.data[pConstant.UBOIndex].modelMatrix * in.modelMat;
-	out.Normal = normalize((mNormal * vec4(normalize(in.Normal), 0)).xyz);
+	out.Normal = normalize((mNormal * vec4(normalize(in.normal), 0)).xyz);
 		
-	out.WPos.xyz = (ubo.data[pConstant.UBOIndex].modelMatrix * in.modelMat * vec4(in.Pos, 1.0)).xyz;
+	out.WPos.xyz = (ubo.data[pConstant.UBOIndex].modelMatrix * in.modelMat * vec4(in.position, 1.0)).xyz;
 	
 	gl_Position = ubo.data[pConstant.UBOIndex].WVP * vec4(out.WPos.xyz, 1.0);
 	
