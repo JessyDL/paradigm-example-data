@@ -1,54 +1,54 @@
 
 attribute VSIn
 {
-	location 0 vec3 position 	( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   attribute: {106,0} );
-	location 1 vec3 color 			( buffer: GEOMETRY_VERTEX_COLOR   	rate: vertex   attribute: {106,0} );
-	location 2 vec2 tex 				( buffer: GEOMETRY_VERTEX_TEX      	rate: vertex   attribute: {103,0} );
-	location 3 mat4x4 modelMat	( buffer: INSTANCE_TRANSFORM       	rate: instance attribute: {109,0}, {109,16}, {109,32}, {109,48} );
+	location 0 vec3 position 	( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   attribute: {69,0} );
+	location 1 vec3 color 			( buffer: GEOMETRY_VERTEX_COLOR   	rate: vertex   attribute: {69,0} );
+	location 2 vec2 tex 				( buffer: GEOMETRY_VERTEX_TEX      	rate: vertex   attribute: {66,0} );
+	location 3 mat4x4 modelMat	( buffer: INSTANCE_TRANSFORM       	rate: instance attribute: {72,0}, {72,16}, {72,32}, {72,48} );
 };
 
 attribute VSIn_full
 {
-	location 0 vec3 position 	( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   attribute: {106,0} );
-	location 1 vec3 color 			( buffer: GEOMETRY_VERTEX_COLOR   	rate: vertex   attribute: {106,0} );
-	location 2 vec2 tex 				( buffer: GEOMETRY_VERTEX_TEX      	rate: vertex   attribute: {103,0} );
-	location 3 vec3 normal 			( buffer: GEOMETRY_VERTEX_NORMAL   	rate: vertex   attribute: {106,0} );
-	location 4 mat4x4 modelMat	( buffer: INSTANCE_TRANSFORM       	rate: instance attribute: {109,0}, {109,16}, {109,32}, {109,48} );
+	location 0 vec3 position 	( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   attribute: {69,0} );
+	location 1 vec3 color 			( buffer: GEOMETRY_VERTEX_COLOR   	rate: vertex   attribute: {69,0} );
+	location 2 vec2 tex 				( buffer: GEOMETRY_VERTEX_TEX      	rate: vertex   attribute: {66,0} );
+	location 3 vec3 normal 			( buffer: GEOMETRY_VERTEX_NORMAL   	rate: vertex   attribute: {69,0} );
+	location 4 mat4x4 modelMat	( buffer: INSTANCE_TRANSFORM       	rate: instance attribute: {72,0}, {72,16}, {72,32}, {72,48} );
 };
 
 
 attribute VSIn_PT
 {
-	location 0 vec3 pos 				( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   attribute: {106,0} );
-	location 1 vec2 tex 				( buffer: GEOMETRY_VERTEX_TEX 				rate: vertex   attribute: {103,0} );
+	location 0 vec3 pos 				( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   attribute: {69,0} );
+	location 1 vec2 tex 				( buffer: GEOMETRY_VERTEX_TEX 				rate: vertex   attribute: {66,0} );
 };
 
 attribute VSIn_P
 {
-	location 0 vec3 pos 				( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   attribute: {106,0} );
-	location 1 mat4x4 modelMat	( buffer: INSTANCE_TRANSFORM       	rate: instance attribute: {109,0}, {109,16}, {109,32}, {109,48} );
+	location 0 vec3 pos 				( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   attribute: {69,0} );
+	location 1 mat4x4 modelMat	( buffer: INSTANCE_TRANSFORM       	rate: instance attribute: {72,0}, {72,16}, {72,32}, {72,48} );
 };
 
 
 attribute VSIn_PCT
 {
-	location 0 vec3 position 	( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   attribute: {106,0} );
-	location 1 vec3 color 			( buffer: GEOMETRY_VERTEX_COLOR   	rate: vertex   attribute: {106,0} );
-	location 2 vec2 tex 				( buffer: GEOMETRY_VERTEX_TEX      	rate: vertex   attribute: {103,0} );
+	location 0 vec3 position 	( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   attribute: {69,0} );
+	location 1 vec3 color 			( buffer: GEOMETRY_VERTEX_COLOR   	rate: vertex   attribute: {69,0} );
+	location 2 vec2 tex 				( buffer: GEOMETRY_VERTEX_TEX      	rate: vertex   attribute: {66,0} );
 };
 
 attribute VSIn_PTM
 {
-	location 0 vec3 Pos 					( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   	attribute: {106,0} );
-	location 1 vec2 Tex 					( buffer: GEOMETRY_VERTEX_TEX 				rate: vertex   	attribute: {103,0} );
-	location 2 mat4x4 modelMat 	( buffer: INSTANCE_POSITION 					rate: instance 	attribute: {109,0}, {109,16}, {109,32}, {109,48} );
+	location 0 vec3 Pos 					( buffer: GEOMETRY_VERTEX_POSITION 	rate: vertex   	attribute: {69,0} );
+	location 1 vec2 Tex 					( buffer: GEOMETRY_VERTEX_TEX 				rate: vertex   	attribute: {66,0} );
+	location 2 mat4x4 modelMat 	( buffer: INSTANCE_POSITION 					rate: instance 	attribute: {72,0}, {72,16}, {72,32}, {72,48} );
 };
 
 attribute VSIn_PNM
 {
-	location 0 vec3 Pos 					( buffer: GEOMETRY_VERTEX_POSITION  rate: vertex   	attribute: {106,0} );
-	location 1 vec3 Normal 				( buffer: GEOMETRY_VERTEX_NORMAL 		rate: vertex   	attribute: {106,0} );
-	location 2 mat4x4 modelMat 	( buffer: INSTANCE_POSITION 					rate: instance 	attribute: {109,0}, {109,16}, {109,32}, {109,48} );
+	location 0 vec3 Pos 					( buffer: GEOMETRY_VERTEX_POSITION  rate: vertex   	attribute: {69,0} );
+	location 1 vec3 Normal 				( buffer: GEOMETRY_VERTEX_NORMAL 		rate: vertex   	attribute: {69,0} );
+	location 2 mat4x4 modelMat 	( buffer: INSTANCE_POSITION 					rate: instance 	attribute: {72,0}, {72,16}, {72,32}, {72,48} );
 };
 
 interface VSOut
