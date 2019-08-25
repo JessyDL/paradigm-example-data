@@ -1,0 +1,37 @@
+#version 300 es
+
+struct FrameData
+{
+    mat4 clipMatrix;
+    mat4 projectionMatrix;
+    mat4 modelMatrix;
+    mat4 viewMatrix;
+    mat4 WVP;
+    mat4 VP;
+    vec4 ScreenParams;
+    vec4 GameTimer;
+    vec4 Parameters;
+    vec4 FogColor;
+    vec4 viewPos;
+    vec4 viewDir;
+};
+
+layout(std140) uniform UBO
+{
+    FrameData data[128];
+} ubo;
+
+out vec4 outcolor;
+layout(location = 1) in vec3 incolor;
+out vec2 outtex;
+layout(location = 2) in vec2 intex;
+layout(location = 0) in vec3 inposition;
+
+void main()
+{
+    outcolor = vec4(incolor, 1.0);
+    outtex = intex;
+    vec3 position = (ubo.data[0].modelMatrix * vec4(inposition, 1.0)).xyz;
+    gl_Position = ubo.data[0].WVP * vec4(position, 1.0);
+}
+

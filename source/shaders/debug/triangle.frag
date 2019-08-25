@@ -5,7 +5,7 @@
 
 #include "../inc/descriptors.inc"
 
-#using in 	: VSOut_Color 	in
+#using in 	: VSOut_ColorTex 	in
 #using descriptors 	: FSBindings_Simple bind
 
 layout(location = 0) out vec4 outColor;
