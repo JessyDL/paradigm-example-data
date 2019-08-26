@@ -5,12 +5,12 @@
 
 #include "../inc/descriptors.inc"
 
-#using in 	: VSOut_ColorTex 	in
-#using descriptors 	: FSBindings_Simple bind
+#using in 	: VSOut_ColorTex vs
+#using descriptors 	: FSBindings_Simple
 
 layout(location = 0) out vec4 outColor;
 
 void main() 
 {
-	outColor = vec4(texture(bind.GSampler, in.tex).xyz,1.0);	
+	outColor = vec4(texture(GSampler, vs.tex).xyz,1.0);	
 }

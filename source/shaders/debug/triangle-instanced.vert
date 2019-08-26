@@ -7,7 +7,7 @@
 #include "../inc/math.inc"
 
 #using in 					: VSIn				in
-#using out 					: VSOut_ColorTex 	out
+#using out 					: VSOut_ColorTex 	vs
 #using descriptors 	: VSBinding
 
 out gl_PerVertex 
@@ -18,8 +18,8 @@ out gl_PerVertex
 
 void main() 
 {
-	out.color = vec4(in.color.xyz, 1.0f);		
-	out.tex = in.tex;
+	vs.color = vec4(in.color.xyz, 1.0f);		
+	vs.tex = in.tex;
 	vec3 position = (ubo.data[0].modelMatrix * in.modelMat * vec4(in.position.xyz, 1.0)).xyz;	
 	gl_Position = ubo.data[0].WVP * vec4(position, 1.0);
 }
