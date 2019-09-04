@@ -32,7 +32,6 @@ void main()
 {
     vscolor = vec4(incolor, 1.0);
     vstex = intex;
-    vec3 position = ((ubo.data[0].modelMatrix * inmodelMat) * vec4(inposition, 1.0)).xyz;
-    gl_Position = ubo.data[0].WVP * vec4(position, 1.0);
+    gl_Position = ubo.data[0].WVP * vec4(((ubo.data[0].modelMatrix * inmodelMat) * vec4(inposition, 1.0)).xyz, 1.0);
 }
 

@@ -1,0 +1,87 @@
+#version 300 es
+precision mediump float;
+precision highp int;
+
+struct material
+{
+    highp vec4 color;
+};
+
+layout(std430) buffer MATERIAL_DATA
+{
+    material data[];
+} mData;
+
+uniform highp sampler2D normalMap;
+uniform highp sampler2D metalicityMap;
+uniform highp sampler2D roughnessMap;
+uniform highp sampler2D albedoMap;
+uniform highp samplerCube reflectMap;
+
+layout(location = 0) out highp vec4 outPosition;
+in highp vec4 inWPos;
+in highp vec2 inTex;
+in highp vec3 inNormal;
+in highp vec4 inViewVec;
+layout(location = 1) out highp vec4 outNormal;
+layout(location = 2) out highp vec4 outAlbedo;
+flat in int inInstanceIndex;
+layout(location = 3) out highp vec4 outAccumulation;
+in highp vec4 inColor;
+
+highp vec3 decodeTangentSpace(highp vec2 enc)
+{
+    highp vec3 n;
+    n = vec3(enc.x, enc.y, n.z);
+    n.x = -n.x;
+    n.z = sqrt(1.0 - dot(n.xy, n.xy));
+    n.y = -n.y;
+    return normalize(n);
+}
+
+highp mat3 cotangent_frame(highp vec3 N, highp vec3 p, highp vec2 uv)
+{
+    highp vec3 dp1 = dFdx(p);
+    highp vec3 dp2 = dFdy(p);
+    highp vec2 duv1 = dFdx(uv);
+    highp vec2 duv2 = dFdy(uv);
+    highp vec3 dp2perp = cross(dp2, N);
+    highp vec3 dp1perp = cross(N, dp1);
+    highp vec3 T = (dp2perp * duv1.x) + (dp1perp * duv2.x);
+    highp vec3 B = (dp2perp * duv1.y) + (dp1perp * duv2.y);
+    highp float invmax = inversesqrt(max(dot(T, T), dot(B, B)));
+    return mat3(vec3(T * invmax), vec3(B * invmax), vec3(N));
+}
+
+highp vec3 DecodeNormalMap(highp sampler2D normalMap_1, highp vec2 texCoord, highp vec3 vertexNormal, highp vec3 view)
+{
+    highp vec4 map = texture(normalMap_1, texCoord);
+    highp vec2 param = (map.wy * 2.0) - vec2(1.0);
+    highp vec3 _170 = decodeTangentSpace(param);
+    map = vec4(_170.x, _170.y, _170.z, map.w);
+    highp vec3 param_1 = vertexNormal;
+    highp vec3 param_2 = -view;
+    highp vec2 param_3 = texCoord;
+    highp mat3 TBN = cotangent_frame(param_1, param_2, param_3);
+    return normalize(TBN * map.xyz);
+}
+
+highp vec2 encodeWSNormals(highp vec3 n)
+{
+    return vec2((vec2(atan(n.y, n.x) / 3.1415927410125732421875, n.z) + vec2(1.0)) * 0.5);
+}
+
+void main()
+{
+    outPosition = inWPos;
+    highp vec2 tex = inTex;
+    highp vec2 param = tex;
+    highp vec3 param_1 = inNormal;
+    highp vec3 param_2 = inViewVec.xyz * inViewVec.w;
+    highp vec3 normal = DecodeNormalMap(normalMap, param, param_1, param_2);
+    highp vec3 param_3 = normal;
+    outNormal = vec4(encodeWSNormals(param_3), texture(metalicityMap, tex).x, texture(roughnessMap, tex).x);
+    outAlbedo = texture(albedoMap, tex) * mData.data[inInstanceIndex].color;
+    outAccumulation = vec4(0.0);
+}
+
