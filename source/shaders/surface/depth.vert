@@ -6,13 +6,13 @@
 #include "../inc/math.inc"
 #include "../inc/descriptors.inc"
 
-#using in 			: VSIn_P 		in
-#using descriptors 	: VSBinding
+layout(location = 0) in vec3 iPos;
+layout(location = 1) in mat4 iModelMat;
 
-layout (push_constant) uniform pushConstants
+layout(binding = 0, std140) uniform GLOBAL_DYNAMIC_WORLD_VIEW_PROJECTION_MATRIX
 {
-	uint UBOIndex;
-} pConstant;
+		FrameData data;
+} ubo;
 
 out gl_PerVertex 
 {
@@ -22,7 +22,7 @@ out gl_PerVertex
 
 void main() 
 {
-	float3 pos = (ubo.data[pConstant.UBOIndex].modelMatrix * in.modelMat * vec4(in.pos, 1.0)).xyz;
+	float3 pos = (ubo.data.modelMatrix * iModelMat * vec4(iPos, 1.0)).xyz;
 	
-	gl_Position = ubo.data[pConstant.UBOIndex].WVP * vec4(pos, 1.0);
+	gl_Position = ubo.data.WVP * vec4(pos, 1.0);
 }

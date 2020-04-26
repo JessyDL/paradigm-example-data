@@ -3,14 +3,12 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-#include "../inc/descriptors.inc"
+layout(location = 0) in vec4 vsCol;
+layout(location = 1) in vec2 vsTex;
+layout(location = 0) out vec4 fsCol;
 
-#using in 	: VSOut_ColorTex vs
-#using descriptors 	: FSBindings_Simple
-
-layout(location = 0) out vec4 outColor;
-
+layout(binding = 1) uniform sampler2D GSampler;
 void main() 
 {
-	outColor = vec4(texture(GSampler, vs.tex).xyz,1.0);	
+	fsCol = vec4(texture(GSampler, vsTex).xyz,1.0) * vsCol;	
 }

@@ -6,14 +6,23 @@
 #include "../inc/math.inc"
 #include "../inc/descriptors.inc"
 
-#using in 			: VSIn_full 		in
-#using out 			: VSOut 	out
-#using descriptors 	: VSBinding
+layout(location = 0) in vec3 iPos;
+layout(location = 1) in vec3 iCol;
+layout(location = 2) in vec2 iTex;
+layout(location = 3) in vec3 iNorm;
+layout(location = 4) in mat4 INSTANCE_TRANSFORM;
 
-layout (push_constant) uniform pushConstants
+layout(location = 0) out vec4 vsCol;
+layout(location = 1) out vec2 vsTex;
+layout(location = 2) out vec4 vsWPOS;
+layout(location = 3) out vec4 vsViewVec;
+layout(location = 4) out vec3 vsNormal;
+layout(location = 5) out flat int vsInstanceIndex;
+
+layout(binding = 0, std140) uniform GLOBAL_DYNAMIC_WORLD_VIEW_PROJECTION_MATRIX
 {
-	uint UBOIndex;
-} pConstant;
+		FrameData data;
+} ubo;
 
 out gl_PerVertex 
 {
@@ -23,18 +32,18 @@ out gl_PerVertex
 
 void main() 
 {
-	out.Color = vec4(0);
-	out.Tex = in.tex;
-	out.InstanceIndex = gl_InstanceIndex;
-	mat4 mNormal = ubo.data[pConstant.UBOIndex].modelMatrix * in.modelMat;
-	out.Normal = normalize((mNormal * vec4(normalize(in.normal), 0)).xyz);
+	vsCol = vec4(0);
+	vsTex = iTex;
+	vsInstanceIndex = gl_InstanceIndex;
+	mat4 mNormal = ubo.data.modelMatrix * INSTANCE_TRANSFORM;
+	vsNormal = normalize((mNormal * vec4(normalize(iNorm), 0)).xyz);
 		
-	out.WPos.xyz = (ubo.data[pConstant.UBOIndex].modelMatrix * in.modelMat * vec4(in.position, 1.0)).xyz;
+	vsWPOS.xyz = (ubo.data.modelMatrix * INSTANCE_TRANSFORM * vec4(iPos, 1.0)).xyz;
 	
-	gl_Position = ubo.data[pConstant.UBOIndex].WVP * vec4(out.WPos.xyz, 1.0);
+	gl_Position = ubo.data.WVP * vec4(vsWPOS.xyz, 1.0);
 	
-	out.ViewVec.xyz = (ubo.data[pConstant.UBOIndex].viewPos.xyz - out.WPos.xyz);
-	out.ViewVec.w = length(out.ViewVec.xyz);
-	out.ViewVec.xyz = normalize(out.ViewVec.xyz);
-	out.WPos.w = distance(out.WPos.xyz, ubo.data[pConstant.UBOIndex].viewPos.xyz) /ubo.data[pConstant.UBOIndex].ScreenParams.w;	
+	vsViewVec.xyz = (ubo.data.viewPos.xyz - vsWPOS.xyz);
+	vsViewVec.w = length(vsViewVec.xyz);
+	vsViewVec.xyz = normalize(vsViewVec.xyz);
+	vsWPOS.w = distance(vsWPOS.xyz, ubo.data.viewPos.xyz) /ubo.data.ScreenParams.w;	
 }

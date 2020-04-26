@@ -5,11 +5,12 @@
 
 #include "../inc/descriptors.inc"
 
-#using in 		: VSOut_T 		in
-#using out 		: FSOut_Post	out
-#using descriptors 	: FSBindings_Simple
+layout(location = 0) in vec2 vsTex;
+layout(location = 0) out vec4 frag;
+
+layout(binding = 1) uniform sampler2D GSampler;
 
 void main() 
 {
-	out.fragColor = texture(GSampler, in.tex);
+	frag = texture(GSampler, vsTex);
 }	

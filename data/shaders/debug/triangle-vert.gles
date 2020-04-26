@@ -16,21 +16,22 @@ struct FrameData
     vec4 viewDir;
 };
 
-layout(std140) uniform GLOBAL_WORLD_VIEW_PROJECTION_MATRIX
+layout(std140) uniform GLOBAL_DYNAMIC_WORLD_VIEW_PROJECTION_MATRIX
 {
-    FrameData data[128];
+    FrameData data;
 } ubo;
 
-out vec4 vscolor;
-layout(location = 1) in vec3 incolor;
-out vec2 vstex;
-layout(location = 2) in vec2 intex;
-layout(location = 0) in vec3 inposition;
+out vec4 vsCol;
+layout(location = 1) in vec3 iCol;
+out vec2 vsTex;
+layout(location = 2) in vec2 iTex;
+layout(location = 0) in vec3 iPos;
 
 void main()
 {
-    vscolor = vec4(incolor, 1.0);
-    vstex = intex;
-    gl_Position = ubo.data[0].WVP * vec4((ubo.data[0].modelMatrix * vec4(inposition, 1.0)).xyz, 1.0);
+    vsCol = vec4(iCol, 1.0);
+    vsTex = iTex;
+    vec3 position = (ubo.data.modelMatrix * vec4(iPos, 1.0)).xyz;
+    gl_Position = ubo.data.WVP * vec4(position, 1.0);
 }
 

@@ -7,7 +7,7 @@ struct material
     highp vec4 color;
 };
 
-layout(std430) buffer MATERIAL_DATA
+layout(std430) buffer MaterialData
 {
     material data[];
 } mData;
@@ -18,16 +18,16 @@ uniform highp sampler2D roughnessMap;
 uniform highp sampler2D albedoMap;
 uniform highp samplerCube reflectMap;
 
-layout(location = 0) out highp vec4 outPosition;
-in highp vec4 inWPos;
-in highp vec2 inTex;
-in highp vec3 inNormal;
-in highp vec4 inViewVec;
-layout(location = 1) out highp vec4 outNormal;
-layout(location = 2) out highp vec4 outAlbedo;
-flat in int inInstanceIndex;
-layout(location = 3) out highp vec4 outAccumulation;
-in highp vec4 inColor;
+layout(location = 0) out highp vec4 fsPos;
+in highp vec4 vsWPOS;
+in highp vec2 vsTex;
+in highp vec3 vsNormal;
+in highp vec4 vsViewVec;
+layout(location = 1) out highp vec4 fsNormal;
+layout(location = 2) out highp vec4 fsAlbedo;
+flat in int vsInstanceIndex;
+layout(location = 3) out highp vec4 fsAccumulation;
+in highp vec4 vsCol;
 
 highp vec3 decodeTangentSpace(highp vec2 enc)
 {
@@ -73,15 +73,15 @@ highp vec2 encodeWSNormals(highp vec3 n)
 
 void main()
 {
-    outPosition = inWPos;
-    highp vec2 tex = inTex;
+    fsPos = vsWPOS;
+    highp vec2 tex = vsTex;
     highp vec2 param = tex;
-    highp vec3 param_1 = inNormal;
-    highp vec3 param_2 = inViewVec.xyz * inViewVec.w;
+    highp vec3 param_1 = vsNormal;
+    highp vec3 param_2 = vsViewVec.xyz * vsViewVec.w;
     highp vec3 normal = DecodeNormalMap(normalMap, param, param_1, param_2);
     highp vec3 param_3 = normal;
-    outNormal = vec4(encodeWSNormals(param_3), texture(metalicityMap, tex).x, texture(roughnessMap, tex).x);
-    outAlbedo = texture(albedoMap, tex) * mData.data[inInstanceIndex].color;
-    outAccumulation = vec4(0.0);
+    fsNormal = vec4(encodeWSNormals(param_3), texture(metalicityMap, tex).x, texture(roughnessMap, tex).x);
+    fsAlbedo = texture(albedoMap, tex) * mData.data[vsInstanceIndex].color;
+    fsAccumulation = vec4(0.0);
 }
 

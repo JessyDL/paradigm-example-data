@@ -16,46 +16,39 @@ struct FrameData
     vec4 viewDir;
 };
 
-layout(std140) uniform GLOBAL_WORLD_VIEW_PROJECTION_MATRIX
+layout(std140) uniform GLOBAL_DYNAMIC_WORLD_VIEW_PROJECTION_MATRIX
 {
-    FrameData data[128];
+    FrameData data;
 } ubo;
 
-struct pushConstants
-{
-    uint UBOIndex;
-};
-
-uniform pushConstants pConstant;
-
-out vec4 outColor;
-out vec2 outTex;
-layout(location = 2) in vec2 intex;
-out int outInstanceIndex;
+out vec4 vsCol;
+out vec2 vsTex;
+layout(location = 2) in vec2 iTex;
+flat out int vsInstanceIndex;
 uniform int SPIRV_Cross_BaseInstance;
-layout(location = 4) in mat4 inmodelMat;
-out vec3 outNormal;
-layout(location = 3) in vec3 innormal;
-out vec4 outWPos;
-layout(location = 0) in vec3 inposition;
-out vec4 outViewVec;
-layout(location = 1) in vec3 incolor;
+layout(location = 4) in mat4 INSTANCE_TRANSFORM;
+out vec3 vsNormal;
+layout(location = 3) in vec3 iNorm;
+out vec4 vsWPOS;
+layout(location = 0) in vec3 iPos;
+out vec4 vsViewVec;
+layout(location = 1) in vec3 iCol;
 
 void main()
 {
-    outColor = vec4(0.0);
-    outTex = intex;
-    outInstanceIndex = (gl_InstanceID + SPIRV_Cross_BaseInstance);
-    mat4 mNormal = ubo.data[pConstant.UBOIndex].modelMatrix * inmodelMat;
-    outNormal = normalize((mNormal * vec4(normalize(innormal), 0.0)).xyz);
-    vec3 _79 = ((ubo.data[pConstant.UBOIndex].modelMatrix * inmodelMat) * vec4(inposition, 1.0)).xyz;
-    outWPos = vec4(_79.x, _79.y, _79.z, outWPos.w);
-    gl_Position = ubo.data[pConstant.UBOIndex].WVP * vec4(outWPos.xyz, 1.0);
-    vec3 _108 = ubo.data[pConstant.UBOIndex].viewPos.xyz - outWPos.xyz;
-    outViewVec = vec4(_108.x, _108.y, _108.z, outViewVec.w);
-    outViewVec.w = length(outViewVec.xyz);
-    vec3 _119 = normalize(outViewVec.xyz);
-    outViewVec = vec4(_119.x, _119.y, _119.z, outViewVec.w);
-    outWPos.w = distance(outWPos.xyz, ubo.data[pConstant.UBOIndex].viewPos.xyz) / ubo.data[pConstant.UBOIndex].ScreenParams.w;
+    vsCol = vec4(0.0);
+    vsTex = iTex;
+    vsInstanceIndex = (gl_InstanceID + SPIRV_Cross_BaseInstance);
+    mat4 mNormal = ubo.data.modelMatrix * INSTANCE_TRANSFORM;
+    vsNormal = normalize((mNormal * vec4(normalize(iNorm), 0.0)).xyz);
+    vec3 _68 = ((ubo.data.modelMatrix * INSTANCE_TRANSFORM) * vec4(iPos, 1.0)).xyz;
+    vsWPOS = vec4(_68.x, _68.y, _68.z, vsWPOS.w);
+    gl_Position = ubo.data.WVP * vec4(vsWPOS.xyz, 1.0);
+    vec3 _93 = ubo.data.viewPos.xyz - vsWPOS.xyz;
+    vsViewVec = vec4(_93.x, _93.y, _93.z, vsViewVec.w);
+    vsViewVec.w = length(vsViewVec.xyz);
+    vec3 _105 = normalize(vsViewVec.xyz);
+    vsViewVec = vec4(_105.x, _105.y, _105.z, vsViewVec.w);
+    vsWPOS.w = distance(vsWPOS.xyz, ubo.data.viewPos.xyz) / ubo.data.ScreenParams.w;
 }
 

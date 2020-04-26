@@ -9,12 +9,9 @@ layout(location = 0) in vec4 vsCol;
 layout(location = 1) in vec2 vsTex;
 layout(location = 0) out vec4 fsCol;
 
-layout(binding = 2) uniform MaterialData
-{
-	vec4 color;
-} mData;
+layout(binding = 1) uniform sampler2D GSampler;
 
 void main() 
 {
-	fsCol = mData.color;
+	fsCol = texture(GSampler, vsTex).r * vsCol;
 }

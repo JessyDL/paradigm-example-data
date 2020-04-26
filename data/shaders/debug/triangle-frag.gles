@@ -4,12 +4,12 @@ precision highp int;
 
 uniform highp sampler2D GSampler;
 
-layout(location = 0) out highp vec4 outColor;
-in highp vec2 vstex;
-in highp vec4 vscolor;
+layout(location = 0) out highp vec4 fsCol;
+in highp vec2 vsTex;
+in highp vec4 vsCol;
 
 void main()
 {
-    outColor = vec4(texture(GSampler, vstex).xyz, 1.0);
+    fsCol = vec4(texture(GSampler, vsTex).xyz, 1.0) * vsCol;
 }
 

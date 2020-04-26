@@ -16,24 +16,17 @@ struct FrameData
     vec4 viewDir;
 };
 
-layout(std140) uniform GLOBAL_WORLD_VIEW_PROJECTION_MATRIX
+layout(std140) uniform GLOBAL_DYNAMIC_WORLD_VIEW_PROJECTION_MATRIX
 {
-    FrameData data[128];
+    FrameData data;
 } ubo;
 
-struct pushConstants
-{
-    uint UBOIndex;
-};
-
-uniform pushConstants pConstant;
-
-layout(location = 1) in mat4 inmodelMat;
-layout(location = 0) in vec3 inpos;
+layout(location = 1) in mat4 iModelMat;
+layout(location = 0) in vec3 iPos;
 
 void main()
 {
-    vec3 pos = ((ubo.data[pConstant.UBOIndex].modelMatrix * inmodelMat) * vec4(inpos, 1.0)).xyz;
-    gl_Position = ubo.data[pConstant.UBOIndex].WVP * vec4(pos, 1.0);
+    vec3 pos = ((ubo.data.modelMatrix * iModelMat) * vec4(iPos, 1.0)).xyz;
+    gl_Position = ubo.data.WVP * vec4(pos, 1.0);
 }
 

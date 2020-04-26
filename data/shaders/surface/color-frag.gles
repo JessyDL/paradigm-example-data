@@ -2,11 +2,17 @@
 precision mediump float;
 precision highp int;
 
-layout(location = 0) out highp vec4 outfragColor;
-in highp vec4 incolor;
+layout(std140) uniform MaterialData
+{
+    highp vec4 color;
+} mData;
+
+layout(location = 0) out highp vec4 fsCol;
+in highp vec4 vsCol;
+in highp vec2 vsTex;
 
 void main()
 {
-    outfragColor = incolor;
+    fsCol = mData.color;
 }
 

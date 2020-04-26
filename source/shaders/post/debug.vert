@@ -5,8 +5,11 @@
 
 #include "../inc/descriptors.inc"
 
-#using in 	: VSIn_PT 		in
-#using out  : VSOut_T	 	out
+
+layout(location = 0) in vec3 iPos;
+layout(location = 1) in vec2 iTex;
+
+layout(location = 0) out vec2 vsTex;
 
 out gl_PerVertex 
 {
@@ -15,10 +18,10 @@ out gl_PerVertex
 
 void main() 
 {
-	out.tex = in.tex;
-	out.tex.y = 1-out.tex.y;
+	vsTex = iTex;
+	vsTex.y = 1-vsTex.y;
 	
-	vec3 pos = in.pos;
+	vec3 pos = iPos;
 	pos.y = -pos.y;
 	pos.x = pos.x * 2 - 1;
 	pos.y = pos.y * 2 + 1;
